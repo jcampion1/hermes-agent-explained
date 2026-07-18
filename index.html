@@ -137,7 +137,7 @@
       .capabilities { grid-template-columns: repeat(3, 1fr); }
       .capability { border-bottom: 0; border-right: 1px solid var(--line); }
       .capability:last-child { border-right: 0; }
-      .case-flow { grid-template-columns: repeat(3, 1fr); }
+      .case-flow { grid-template-columns: repeat(4, 1fr); }
       .case-step { border-bottom: 0; border-right: 1px solid var(--line); }
       .case-step:last-child { border-right: 0; }
       .boundary { grid-template-columns: .8fr 1.2fr; align-items: start; padding: 38px; }
@@ -218,17 +218,18 @@
     <section>
       <p class="eyebrow">05 / Example use case</p>
       <div class="rule"></div>
-      <h2>“Give me a clean briefing on a company before my meeting.”</h2>
+      <h2>“Research my industry and product competitors, then create a PowerPoint and Word brief that shows what sets us apart.”</h2>
       <div class="use-case">
         <div class="use-case-head">
-          <p class="eyebrow">What happens next</p>
-          <h3>Hermes turns that vague request into a checkable workstream.</h3>
-          <p>Instead of making up a summary from old training data, the agent can gather current public information, separate facts from assumptions, and return a concise briefing with sources.</p>
+          <p class="eyebrow">What Hermes + OpenAI do</p>
+          <h3>Turn a broad competitive-analysis request into a sourced, usable deliverable.</h3>
+          <p>This example uses public information only. The OpenAI model interprets the goal, compares the evidence, and drafts the story; Hermes supplies the working context, approved research tools, document creation, and verification.</p>
         </div>
         <div class="case-flow">
-          <article class="case-step"><span>Step 01 / Gather</span><h3>Research current sources</h3><p>Search official sites, press releases, filings, and credible reporting for current facts.</p></article>
-          <article class="case-step"><span>Step 02 / Distill</span><h3>Find the signal</h3><p>Pull out the company’s business, recent developments, key people, and questions worth asking.</p></article>
-          <article class="case-step"><span>Step 03 / Deliver</span><h3>Leave a useful brief</h3><p>Produce a readable one-pager with links, caveats, and a clean distinction between verified facts and interpretation.</p></article>
+          <article class="case-step"><span>Step 01 / Discover</span><h3>Research the market</h3><p>Hermes searches current public sources for industry trends, competitor positioning, product updates, customer proof points, and relevant news.</p></article>
+          <article class="case-step"><span>Step 02 / Analyze</span><h3>Find differentiation</h3><p>The OpenAI model organizes what was found, compares competitors against the requested criteria, and separates verified facts from strategic interpretation.</p></article>
+          <article class="case-step"><span>Step 03 / Build</span><h3>Create the actual materials</h3><p>Hermes turns the analysis into a PowerPoint presentation and Word document—with a clear narrative, comparison points, sources, and caveats.</p></article>
+          <article class="case-step"><span>Step 04 / Verify</span><h3>Check before delivery</h3><p>Hermes confirms the files exist, reads them back for completeness, and returns the finished documents with an honest note about any gaps.</p></article>
         </div>
       </div>
     </section>
