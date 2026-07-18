@@ -3,187 +3,217 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#10100f">
-  <meta name="description" content="A brief, plain-English explanation of Hermes Agent and how it uses an OpenAI GPT model.">
-  <title>Hermes Agent, Explained</title>
+  <meta name="theme-color" content="#08090a">
+  <meta name="description" content="A quick visual guide to Hermes Agent and how it works with GPT models.">
+  <title>Hermes Agent — A Visual Guide</title>
   <style>
     :root {
-      --ink: #171714;
-      --paper: #f8f4e9;
-      --cream: #fffdf7;
-      --gold: #b58b3a;
-      --gold-deep: #7b5b20;
-      --charcoal: #10100f;
-      --muted: #625f56;
-      --line: #ded7c6;
-      --success: #276749;
+      --bg: #08090a;
+      --panel: #101214;
+      --panel-2: #15181b;
+      --ink: #f5f5f1;
+      --muted: #a5a7a4;
+      --line: #2e3234;
+      --gold: #d6b66b;
+      --gold-dim: #8f753d;
       --radius: 18px;
-      --shadow: 0 16px 40px rgba(28, 23, 12, .12);
+      --max: 1120px;
     }
-
     * { box-sizing: border-box; }
-    html { background: var(--paper); scroll-behavior: smooth; }
+    html { background: var(--bg); scroll-behavior: smooth; }
     body {
       margin: 0;
+      min-width: 320px;
       color: var(--ink);
-      background: var(--paper);
-      font-family: Georgia, "Times New Roman", serif;
-      line-height: 1.55;
+      background: var(--bg);
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
     }
-    a { color: var(--gold-deep); font-weight: 700; text-underline-offset: 3px; }
-    .shell { width: min(100% - 32px, 760px); margin: 0 auto; }
+    a { color: var(--ink); text-underline-offset: 4px; }
+    .wrap { width: min(calc(100% - 40px), var(--max)); margin: auto; }
+    .eyebrow { margin: 0; color: var(--gold); font-size: .72rem; font-weight: 760; letter-spacing: .16em; text-transform: uppercase; }
+    .rule { width: 48px; height: 1px; margin: 20px 0; background: var(--gold); }
 
-    .masthead {
-      padding: max(28px, env(safe-area-inset-top)) 0 28px;
-      background: var(--charcoal);
-      color: #fffaf0;
-      border-bottom: 5px solid var(--gold);
+    header {
+      min-height: 84vh;
+      display: flex;
+      padding: max(24px, env(safe-area-inset-top)) 0 52px;
+      border-bottom: 1px solid var(--line);
+      background-image: linear-gradient(rgba(255,255,255,.026) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.026) 1px, transparent 1px);
+      background-size: 42px 42px;
     }
-    .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 32px; }
-    .crest {
-      width: 44px; height: 44px; flex: 0 0 44px;
-      display: grid; place-items: center;
-      border: 1px solid rgba(213, 178, 99, .78);
-      color: #e3c17b;
-      border-radius: 50%;
-      font: 700 21px/1 Georgia, serif;
-    }
-    .wordmark { letter-spacing: .16em; font: 700 13px/1.1 Arial, sans-serif; color: #e3c17b; }
-    .submark { display: block; margin-top: 4px; font: 11px/1.2 Arial, sans-serif; letter-spacing: .04em; color: #d2c9b8; }
-    .eyebrow { margin: 0 0 10px; color: #e3c17b; font: 700 12px/1.3 Arial, sans-serif; letter-spacing: .14em; text-transform: uppercase; }
-    h1 { max-width: 650px; margin: 0; font-size: clamp(2.2rem, 9vw, 4.5rem); line-height: .98; letter-spacing: -.045em; }
-    .dek { max-width: 620px; margin: 18px 0 0; color: #e8e1d3; font-size: clamp(1.05rem, 3.9vw, 1.28rem); }
+    .hero { width: 100%; display: flex; flex-direction: column; }
+    .nav { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    .mark { display: flex; align-items: center; gap: 10px; font-size: .78rem; font-weight: 750; letter-spacing: .13em; }
+    .seal { display: grid; place-items: center; width: 30px; height: 30px; border: 1px solid var(--gold-dim); border-radius: 50%; color: var(--gold); font-family: Georgia, serif; font-size: 1rem; }
+    .nav-note { color: var(--muted); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; }
+    .hero-copy { max-width: 780px; margin: auto 0; padding: 86px 0 60px; }
+    h1 { margin: 14px 0 0; max-width: 760px; font-size: clamp(3.15rem, 12vw, 8.2rem); font-weight: 580; letter-spacing: -.078em; line-height: .84; text-wrap: balance; }
+    .hero-copy h1 em { color: var(--gold); font-style: normal; }
+    .lede { max-width: 600px; margin: 28px 0 0; color: #d0d1cc; font-size: clamp(1.08rem, 3vw, 1.32rem); line-height: 1.5; }
+    .scroll-line { display: flex; align-items: center; gap: 10px; color: var(--muted); font: .7rem/1 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .11em; text-transform: uppercase; }
+    .scroll-line::before { content: ""; width: 36px; height: 1px; background: var(--gold); }
 
-    main { padding: 36px 0 20px; }
-    h2 { margin: 0 0 12px; font-size: clamp(1.55rem, 6vw, 2.25rem); line-height: 1.1; letter-spacing: -.025em; }
-    h3 { margin: 0 0 5px; font-size: 1.12rem; line-height: 1.25; }
-    p { margin: 0; font-size: 1.05rem; }
-    section { margin: 0 0 38px; }
-    .intro { font-size: 1.18rem; color: #37342e; }
-    .rule { width: 76px; height: 4px; margin: 16px 0 18px; background: var(--gold); }
+    main { padding: 94px 0 16px; }
+    section { margin-bottom: 116px; }
+    h2 { max-width: 800px; margin: 0; font-size: clamp(2rem, 6vw, 4.2rem); font-weight: 560; letter-spacing: -.055em; line-height: .98; text-wrap: balance; }
+    h3 { margin: 0; font-size: 1.05rem; letter-spacing: -.015em; }
+    p { margin: 0; line-height: 1.58; }
+    .section-intro { max-width: 620px; color: var(--muted); font-size: 1.1rem; }
 
-    .definition {
-      padding: 24px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--cream);
-      box-shadow: var(--shadow);
-    }
-    .definition strong { color: var(--gold-deep); }
+    .system { display: grid; grid-template-columns: 1fr; margin-top: 42px; border: 1px solid var(--line); background: var(--panel); }
+    .diagram { position: relative; min-height: 430px; overflow: hidden; padding: 28px; border-bottom: 1px solid var(--line); background: radial-gradient(circle at 50% 46%, rgba(214,182,107,.09), transparent 27%); }
+    .diagram::before, .diagram::after { content: ""; position: absolute; border: 1px solid rgba(214,182,107,.22); border-radius: 50%; pointer-events: none; }
+    .diagram::before { width: 252px; height: 252px; top: 85px; left: calc(50% - 126px); }
+    .diagram::after { width: 370px; height: 370px; top: 26px; left: calc(50% - 185px); border-color: rgba(255,255,255,.09); }
+    .node { position: absolute; z-index: 1; display: grid; place-items: center; width: 112px; height: 112px; padding: 12px; border: 1px solid var(--line); border-radius: 50%; background: rgba(16,18,20,.94); color: var(--muted); text-align: center; font-size: .7rem; font-weight: 730; letter-spacing: .11em; line-height: 1.25; text-transform: uppercase; }
+    .node strong { display: block; color: var(--ink); font-size: .95rem; letter-spacing: -.02em; text-transform: none; }
+    .node.core { top: calc(50% - 56px); left: calc(50% - 56px); border-color: var(--gold); box-shadow: 0 0 0 10px rgba(214,182,107,.04); color: var(--gold); }
+    .node.a { top: 28px; left: calc(50% - 56px); }
+    .node.b { bottom: 22px; left: 18px; }
+    .node.c { right: 18px; bottom: 22px; }
+    .connector { position: absolute; z-index: 0; top: 50%; left: 50%; width: 1px; height: 190px; transform-origin: top; background: linear-gradient(var(--gold-dim), transparent); }
+    .c-a { transform: rotate(180deg); }
+    .c-b { transform: rotate(122deg); }
+    .c-c { transform: rotate(-122deg); }
+    .caption { position: absolute; right: 18px; bottom: 14px; z-index: 2; color: #6c706e; font: .63rem/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .08em; text-transform: uppercase; }
+    .system-copy { padding: 30px; }
+    .system-copy p { color: var(--muted); }
+    .system-copy p + p { margin-top: 16px; }
+    .system-copy strong { color: var(--ink); }
 
-    .steps { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 12px; }
-    .step { position: relative; display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start; padding: 15px 14px; border-bottom: 1px solid var(--line); }
-    .step:last-child { border-bottom: 0; }
-    .number {
-      width: 33px; height: 33px; display: grid; place-items: center;
-      border-radius: 50%; background: var(--charcoal); color: #f2d595;
-      font: 700 14px/1 Arial, sans-serif;
-    }
-    .step p { color: var(--muted); font-size: .98rem; }
+    .steps { display: grid; margin-top: 42px; border-top: 1px solid var(--line); }
+    .step { display: grid; grid-template-columns: 42px 1fr; gap: 14px; padding: 25px 0; border-bottom: 1px solid var(--line); }
+    .step-num { color: var(--gold); font: .75rem/1 ui-monospace, SFMono-Regular, Menlo, monospace; padding-top: 5px; }
+    .step p { margin-top: 6px; color: var(--muted); }
 
-    .model-card {
-      padding: 24px; border-radius: var(--radius); background: var(--charcoal); color: #fffaf0;
-      border: 1px solid #272620;
-    }
-    .model-card h2 { color: #f0d493; }
-    .model-card p { color: #e3ddd1; }
-    .model-card .small { margin-top: 14px; font: .86rem/1.45 Arial, sans-serif; color: #cfc5b4; }
-    .truth { margin-top: 18px; padding: 14px 15px; border-left: 4px solid var(--gold); background: rgba(255,255,255,.07); font-size: .98rem; }
+    .model { padding: 34px 28px; border-left: 2px solid var(--gold); background: var(--panel-2); }
+    .model .eyebrow { margin-bottom: 22px; }
+    .model h2 { max-width: 700px; }
+    .model p { max-width: 740px; margin-top: 22px; color: #d0d1cc; font-size: 1.08rem; }
+    .model .fine { color: var(--muted); font-size: .89rem; }
 
-    .grid { display: grid; gap: 12px; margin-top: 18px; }
-    .item { padding: 17px; border: 1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,.46); }
-    .item p { color: var(--muted); font-size: .96rem; }
+    .capabilities { display: grid; gap: 0; margin-top: 42px; border: 1px solid var(--line); }
+    .capability { min-height: 176px; padding: 28px; border-bottom: 1px solid var(--line); background: var(--panel); }
+    .capability:last-child { border-bottom: 0; }
+    .capability p { margin-top: 10px; color: var(--muted); }
+    .capability-label { display: block; margin-bottom: 28px; color: var(--gold); font: .66rem/1 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .1em; text-transform: uppercase; }
 
-    .boundary { padding: 22px; border-radius: var(--radius); background: #ede4cf; }
-    .boundary h2 { font-size: 1.55rem; }
-    .boundary ul { margin: 12px 0 0; padding-left: 20px; }
-    .boundary li { margin: 7px 0; }
+    .boundary { display: grid; gap: 28px; padding: 30px; border: 1px solid var(--line); background: transparent; }
+    .boundary p { color: var(--muted); }
+    .boundary ul { display: grid; gap: 12px; padding: 0; margin: 0; list-style: none; }
+    .boundary li { display: grid; grid-template-columns: 16px 1fr; gap: 9px; color: #d0d1cc; }
+    .boundary li::before { content: "•"; color: var(--gold); }
 
-    .footer { margin-top: 8px; padding: 26px 0 max(32px, env(safe-area-inset-bottom)); border-top: 1px solid var(--line); color: var(--muted); font: .88rem/1.5 Arial, sans-serif; }
-    .footer p + p { margin-top: 9px; }
-    .pill { display: inline-block; padding: 5px 9px; border: 1px solid var(--line); border-radius: 999px; color: #504b40; background: #fffdf7; font-size: .78rem; font-weight: 700; letter-spacing: .02em; }
+    footer { padding: 32px 0 max(36px, env(safe-area-inset-bottom)); border-top: 1px solid var(--line); color: var(--muted); font-size: .82rem; }
+    footer .wrap { display: flex; justify-content: space-between; align-items: start; gap: 22px; }
+    footer p { max-width: 450px; }
+    .links { display: flex; flex-wrap: wrap; gap: 15px; }
+    .links a { color: #d0d1cc; }
 
-    @media (min-width: 640px) {
-      .masthead { padding-bottom: 42px; }
-      main { padding-top: 52px; }
-      .definition, .model-card { padding: 30px; }
-      .grid { grid-template-columns: repeat(3, 1fr); }
-      .step { padding-left: 2px; padding-right: 2px; }
+    @media (min-width: 760px) {
+      .system { grid-template-columns: 1.05fr .95fr; }
+      .diagram { border-right: 1px solid var(--line); border-bottom: 0; }
+      .steps { grid-template-columns: repeat(4, 1fr); }
+      .step { display: block; min-height: 210px; padding: 25px 20px 25px 0; border-bottom: 0; border-right: 1px solid var(--line); }
+      .step + .step { padding-left: 20px; }
+      .step:last-child { border-right: 0; }
+      .step p { font-size: .95rem; }
+      .capabilities { grid-template-columns: repeat(3, 1fr); }
+      .capability { border-bottom: 0; border-right: 1px solid var(--line); }
+      .capability:last-child { border-right: 0; }
+      .boundary { grid-template-columns: .8fr 1.2fr; align-items: start; padding: 38px; }
     }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-    @media print { .masthead { padding-top: 24px; } body { background: white; } .definition { box-shadow: none; } }
   </style>
 </head>
 <body>
-  <header class="masthead">
-    <div class="shell">
-      <div class="brand" aria-label="Winston">
-        <div class="crest" aria-hidden="true">W</div>
-        <div class="wordmark">W.I.N.S.T.O.N.<span class="submark">A Hermes Agent assistant</span></div>
+  <header>
+    <div class="wrap hero">
+      <nav class="nav" aria-label="Page identity">
+        <div class="mark"><span class="seal" aria-hidden="true">W</span> W.I.N.S.T.O.N.</div>
+        <span class="nav-note">A Hermes Agent assistant</span>
+      </nav>
+      <div class="hero-copy">
+        <p class="eyebrow">A visual guide</p>
+        <h1>AI that can <em>actually</em> work.</h1>
+        <p class="lede">Hermes Agent gives a language model a working environment: real context, approved tools, memory, and the ability to check what it did.</p>
       </div>
-      <p class="eyebrow">The two-minute version</p>
-      <h1>Hermes Agent, explained without the robot fog.</h1>
-      <p class="dek">Hermes is the capable assistant framework. A GPT model is the reasoning engine. Together, they can converse, remember context, and—when allowed—actually do useful work.</p>
+      <div class="scroll-line">A two-minute primer</div>
     </div>
   </header>
 
-  <main class="shell">
+  <main class="wrap">
     <section>
-      <p class="intro">Think of it less like a chatbot in a browser tab, and more like a digital chief of staff with a real toolkit.</p>
+      <p class="eyebrow">01 / The idea</p>
       <div class="rule"></div>
-      <div class="definition">
-        <h2>What Hermes Agent is</h2>
-        <p><strong>Hermes Agent is an open-source AI agent framework by Nous Research.</strong> It connects an AI model to useful capabilities—such as files, web research, browser automation, calendars, code, messages, and scheduled jobs—while keeping a conversation’s instructions and working context together.</p>
+      <h2>Not just a chat window. A system built to get things done.</h2>
+      <p class="section-intro" style="margin-top:24px">Hermes Agent is an open-source framework by Nous Research. It connects an AI model to useful capabilities—files, web research, browser automation, messages, code, schedules, and more—then keeps the work in context.</p>
+      <div class="system">
+        <div class="diagram" role="img" aria-label="Diagram: a Hermes Agent core connects your request, approved tools, and verified results.">
+          <span class="connector c-a" aria-hidden="true"></span><span class="connector c-b" aria-hidden="true"></span><span class="connector c-c" aria-hidden="true"></span>
+          <div class="node a"><span><strong>Your</strong> request</span></div>
+          <div class="node b"><span><strong>Approved</strong> tools</span></div>
+          <div class="node c"><span><strong>Verified</strong> result</span></div>
+          <div class="node core"><span>Hermes<br><strong>Agent</strong></span></div>
+          <span class="caption">context + action loop</span>
+        </div>
+        <div class="system-copy">
+          <p class="eyebrow">The visual</p>
+          <div class="rule"></div>
+          <p><strong>Hermes is the operator around the model.</strong> It routes the right tool, returns real results to the model, and lets the work continue until there is an answer or finished artifact.</p>
+          <p>That changes the experience from “ask something and hope” to “ask, investigate, do, verify, and report.”</p>
+        </div>
       </div>
     </section>
 
     <section>
-      <h2>How it generally works</h2>
+      <p class="eyebrow">02 / The loop</p>
       <div class="rule"></div>
-      <ol class="steps">
-        <li class="step"><span class="number">1</span><div><h3>You ask for something</h3><p>For example: “Research this company,” “clean up this spreadsheet,” or “remind me next Tuesday.”</p></div></li>
-        <li class="step"><span class="number">2</span><div><h3>The model decides what’s needed</h3><p>It reads the request and context, then may answer directly or request the right tool—like a browser, file reader, or calendar.</p></div></li>
-        <li class="step"><span class="number">3</span><div><h3>Hermes runs the tool</h3><p>Hermes safely routes the tool call, gathers the real result, and sends that result back to the model.</p></div></li>
-        <li class="step"><span class="number">4</span><div><h3>The assistant finishes the job</h3><p>The model uses the evidence to continue, check its work, and give you a grounded answer or a completed deliverable.</p></div></li>
-      </ol>
+      <h2>Four moves. One completed job.</h2>
+      <div class="steps">
+        <article class="step"><span class="step-num">01</span><h3>Ask</h3><p>Give the assistant a goal: research, write, organize, build, or remind.</p></article>
+        <article class="step"><span class="step-num">02</span><h3>Plan</h3><p>The model interprets the request and identifies the information or tools it needs.</p></article>
+        <article class="step"><span class="step-num">03</span><h3>Act</h3><p>Hermes runs approved tools and passes their real outputs back into the work.</p></article>
+        <article class="step"><span class="step-num">04</span><h3>Verify</h3><p>The assistant checks the outcome before returning a response or deliverable.</p></article>
+      </div>
     </section>
 
-    <section class="model-card">
-      <p class="eyebrow">Where ChatGPT fits</p>
-      <h2>ChatGPT is the brain, not the whole operation.</h2>
-      <p>“ChatGPT” is OpenAI’s consumer product; underneath it are GPT-family language models. Hermes can use those models through an OpenAI provider connection, just as it can use models from other providers.</p>
-      <div class="truth"><strong>In this conversation:</strong> I’m running as a Hermes Agent using an OpenAI GPT model through the OpenAI Codex provider. The model understands and plans; Hermes supplies the persistent context and the ability to use approved tools.</div>
-      <p class="small">Important distinction: Hermes is model-agnostic. It is not married to ChatGPT, and the model can be changed without replacing the Hermes workflow.</p>
+    <section class="model">
+      <p class="eyebrow">03 / Where ChatGPT fits</p>
+      <h2>The model is the brain. Hermes is the operating system around it.</h2>
+      <p>ChatGPT is OpenAI’s consumer product; underneath it are GPT-family models. Hermes can use an OpenAI model through a provider connection, just as it can use models from other providers.</p>
+      <p class="fine">In this conversation, I’m a Hermes Agent using an OpenAI GPT model through the OpenAI Codex provider. The model reasons and plans; Hermes brings persistent context and approved tool access.</p>
     </section>
 
     <section>
-      <h2>What that lets an assistant do</h2>
+      <p class="eyebrow">04 / What that unlocks</p>
       <div class="rule"></div>
-      <div class="grid">
-        <article class="item"><h3>Research with receipts</h3><p>Search current sources, inspect sites, and report what was actually found—not just what the model remembers.</p></article>
-        <article class="item"><h3>Make real artifacts</h3><p>Draft documents, write code, analyze files, create reports, and verify the output exists.</p></article>
-        <article class="item"><h3>Keep useful continuity</h3><p>Remember approved preferences and reusable workflows across sessions, rather than starting from zero every time.</p></article>
+      <h2>Useful, grounded work—not a spectacularly confident guess.</h2>
+      <div class="capabilities">
+        <article class="capability"><span class="capability-label">Research</span><h3>Current facts with receipts</h3><p>Look up live sources, inspect pages and documents, and report what was actually found.</p></article>
+        <article class="capability"><span class="capability-label">Create</span><h3>Real artifacts</h3><p>Write documents, build pages, analyze files, create reports, and confirm the output exists.</p></article>
+        <article class="capability"><span class="capability-label">Continue</span><h3>Useful continuity</h3><p>Carry approved preferences and reusable workflows across sessions instead of starting cold every time.</p></article>
       </div>
     </section>
 
     <section class="boundary">
-      <h2>One healthy boundary</h2>
-      <p>An agent is powerful because it can use tools, so permissions matter.</p>
+      <div><p class="eyebrow">05 / The boundary</p><div class="rule"></div><h2>Capability needs permission.</h2></div>
       <ul>
-        <li>It should use only the tools and accounts it has been given.</li>
-        <li>It should check real sources before making current factual claims.</li>
-        <li>It should ask before irreversible or high-impact actions.</li>
-        <li>It can be wrong—especially on ambiguous requests—so verification still matters.</li>
+        <li>It should only use the accounts and tools it has been given.</li>
+        <li>It should verify current claims against real sources whenever possible.</li>
+        <li>It should ask before high-impact or irreversible actions.</li>
+        <li>It can be wrong—especially with vague requests—so good verification still matters.</li>
       </ul>
     </section>
   </main>
 
-  <footer class="shell footer">
-    <span class="pill">Shareable public page</span>
-    <p>This page is designed to open cleanly in any modern phone or desktop browser.</p>
-    <p>Learn more: <a href="https://hermes-agent.nousresearch.com/docs/">Hermes Agent documentation</a> · <a href="https://github.com/NousResearch/hermes-agent">Hermes Agent on GitHub</a></p>
+  <footer>
+    <div class="wrap">
+      <p>Hermes Agent is open source and model-agnostic. This is a short, plain-English guide—not a sales brochure with a fog machine.</p>
+      <div class="links"><a href="https://hermes-agent.nousresearch.com/docs/">Documentation</a><a href="https://github.com/NousResearch/hermes-agent">GitHub</a></div>
+    </div>
   </footer>
 </body>
 </html>
