@@ -84,9 +84,11 @@
     .system-copy strong { color: var(--ink); }
 
     .steps { display: grid; margin-top: 42px; border-top: 1px solid var(--line); }
-    .step { display: grid; grid-template-columns: 42px 1fr; gap: 14px; padding: 25px 0; border-bottom: 1px solid var(--line); }
+    .step { display: grid; grid-template-columns: 42px minmax(0, 1fr); gap: 14px; padding: 25px 0; border-bottom: 1px solid var(--line); }
     .step-num { color: var(--gold); font: .75rem/1 ui-monospace, SFMono-Regular, Menlo, monospace; padding-top: 5px; }
-    .step p { margin-top: 6px; color: var(--muted); }
+    /* Keep the body copy in the content column; without this, CSS auto-placement
+       starts it below the number in the narrow 42px marker column on mobile. */
+    .step p { grid-column: 2; margin-top: 6px; }
 
     .model { padding: 34px 28px; border-left: 2px solid var(--gold); background: var(--panel-2); }
     .model .eyebrow { margin-bottom: 22px; }
