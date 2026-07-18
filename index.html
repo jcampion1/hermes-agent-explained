@@ -112,7 +112,9 @@
     .links { display: flex; flex-wrap: wrap; gap: 15px; }
     .links a { color: #d0d1cc; }
 
-    @media (min-width: 760px) {
+    /* Wide, landscape view only. Some iPhone/in-app browsers report physical-pixel width,
+       so width alone can incorrectly trigger desktop columns in portrait. */
+    @media (min-width: 760px) and (min-aspect-ratio: 1/1) {
       .system { grid-template-columns: 1.05fr .95fr; }
       .diagram { border-right: 1px solid var(--line); border-bottom: 0; }
       .steps { grid-template-columns: repeat(4, 1fr); }
