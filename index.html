@@ -102,6 +102,16 @@
     .capability p { margin-top: 10px; color: var(--muted); }
     .capability-label { display: block; margin-bottom: 28px; color: var(--gold); font: .66rem/1 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .1em; text-transform: uppercase; }
 
+    .use-case { margin-top: 42px; border: 1px solid var(--line); background: var(--panel); }
+    .use-case-head { padding: 28px; border-bottom: 1px solid var(--line); }
+    .use-case-head h3 { margin-top: 10px; font-size: clamp(1.45rem, 4vw, 2.2rem); letter-spacing: -.04em; }
+    .use-case-head p { margin-top: 12px; max-width: 690px; color: var(--muted); }
+    .case-flow { display: grid; }
+    .case-step { padding: 22px 28px; border-bottom: 1px solid var(--line); }
+    .case-step:last-child { border-bottom: 0; }
+    .case-step span { display: block; margin-bottom: 9px; color: var(--gold); font: .66rem/1 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .1em; text-transform: uppercase; }
+    .case-step p { color: var(--muted); font-size: .94rem; }
+
     .boundary { display: grid; gap: 28px; padding: 30px; border: 1px solid var(--line); background: transparent; }
     .boundary p { color: var(--muted); }
     .boundary ul { display: grid; gap: 12px; padding: 0; margin: 0; list-style: none; }
@@ -127,6 +137,9 @@
       .capabilities { grid-template-columns: repeat(3, 1fr); }
       .capability { border-bottom: 0; border-right: 1px solid var(--line); }
       .capability:last-child { border-right: 0; }
+      .case-flow { grid-template-columns: repeat(3, 1fr); }
+      .case-step { border-bottom: 0; border-right: 1px solid var(--line); }
+      .case-step:last-child { border-right: 0; }
       .boundary { grid-template-columns: .8fr 1.2fr; align-items: start; padding: 38px; }
     }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
@@ -202,8 +215,26 @@
       </div>
     </section>
 
+    <section>
+      <p class="eyebrow">05 / Example use case</p>
+      <div class="rule"></div>
+      <h2>“Give me a clean briefing on a company before my meeting.”</h2>
+      <div class="use-case">
+        <div class="use-case-head">
+          <p class="eyebrow">What happens next</p>
+          <h3>Hermes turns that vague request into a checkable workstream.</h3>
+          <p>Instead of making up a summary from old training data, the agent can gather current public information, separate facts from assumptions, and return a concise briefing with sources.</p>
+        </div>
+        <div class="case-flow">
+          <article class="case-step"><span>Step 01 / Gather</span><h3>Research current sources</h3><p>Search official sites, press releases, filings, and credible reporting for current facts.</p></article>
+          <article class="case-step"><span>Step 02 / Distill</span><h3>Find the signal</h3><p>Pull out the company’s business, recent developments, key people, and questions worth asking.</p></article>
+          <article class="case-step"><span>Step 03 / Deliver</span><h3>Leave a useful brief</h3><p>Produce a readable one-pager with links, caveats, and a clean distinction between verified facts and interpretation.</p></article>
+        </div>
+      </div>
+    </section>
+
     <section class="boundary">
-      <div><p class="eyebrow">05 / The boundary</p><div class="rule"></div><h2>Capability needs permission.</h2></div>
+      <div><p class="eyebrow">06 / The boundary</p><div class="rule"></div><h2>Capability needs permission.</h2></div>
       <ul>
         <li>It should only use the accounts and tools it has been given.</li>
         <li>It should verify current claims against real sources whenever possible.</li>
